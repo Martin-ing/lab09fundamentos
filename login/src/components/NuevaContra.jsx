@@ -3,6 +3,7 @@ import { sendPasswordResetEmail, fetchSignInMethodsForEmail } from "firebase/aut
 import { auth } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { Container, Typography, TextField, Button, Box } from "@mui/material";
+import "../styles.css";
 
 const NuevaContra = () => {
   const [email, setEmail] = useState("");
@@ -10,25 +11,20 @@ const NuevaContra = () => {
   const navigate = useNavigate();
   const [emailSent, setEmailSent] = useState(false);
 
+  //Handleresetpassword se encarga de mandar el email de reinicio de contraseña usando la funcion de sendPasswordResetEmail de firebase
   const handleResetPassword = async (e) => {
     e.preventDefault();
     try {
-        const sim = await fetchSignInMethodsForEmail(auth, email);
-        if (sim.length === 0) {
-            setError("Este correo no está registrado.");
-            return;
-        }
-        else{
-            await sendPasswordResetEmail(auth, email);
-            setEmailSent(true);
-        }
+      await sendPasswordResetEmail(auth, email);
+      setEmailSent(true);
+      
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm"  className="fondo">
       <Box
         sx={{
           mt: 8,
@@ -40,6 +36,7 @@ const NuevaContra = () => {
         <Typography variant="h4" gutterBottom>
           Password resset
         </Typography>
+        {/* el emailsent se encarga de quitar el formulario de reenvio si ya se envio el correo, para evitar que se pueda mandar varias veces */}
         {!emailSent ? (
         <form onSubmit={handleResetPassword} style={{ width: "100%" }}>
           <TextField
@@ -62,6 +59,7 @@ const NuevaContra = () => {
           </Button>
         </form>
         ) : (
+            // Mensaje que se muestra si ya se mando el correo
             <Typography color="success.main" sx={{ mt: 2 }}>
               Correo enviado. Revisa tu bandeja de entrada.
             </Typography>

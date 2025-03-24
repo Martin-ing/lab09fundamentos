@@ -1,9 +1,9 @@
-// components/Dashboard.js
 import React from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { Container, Typography, Button, Box } from "@mui/material";
+import "../styles.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Dashboard = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" className="fondo">
       <Box
         sx={{
           mt: 8,

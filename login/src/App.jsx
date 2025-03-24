@@ -1,4 +1,3 @@
-// App.js
 import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -30,9 +29,9 @@ function App() {
   return (
     <Router>
       <Routes>
+      {/* La ruta de register es para registrar un usuario, la de nuevacontra es para mandar email de reinicio de contraseña, y la  de dashboard y / te mandaran al login o al dashboard dependiendo de si hay un usuario logueado*/}
         <Route path="/register" element={<Register />} />
         <Route path="/NuevaContra" element={<NuevaContra />} />
-        {/* Si hay sesión, se muestra el dashboard; si no, se muestra login */}
         <Route path="/" element={user ? <Dashboard /> : <Login />} />
         <Route
           path="/dashboard"

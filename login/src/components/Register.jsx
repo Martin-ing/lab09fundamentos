@@ -1,9 +1,9 @@
-// components/Register.js
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { Container, Typography, TextField, Button, Box } from "@mui/material";
+import "../styles.css";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -22,7 +22,7 @@ const Register = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" className="fondo">
       <Box
         sx={{
           mt: 8,

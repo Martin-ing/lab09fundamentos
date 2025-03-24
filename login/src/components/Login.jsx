@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Typography, TextField, Button, Box } from "@mui/material";
 import Gitlogo from "../assets/Gitlogo.png";
 import Goologo from "../assets/Goologo.png";
+import "../styles.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,6 +18,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  //maneja el log in normal mediante correo
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -28,9 +30,12 @@ const Login = () => {
     }
   };
 
+  //maneja el log in mediante google, usando la funcion de GoogleAuthProvider de firebase para definir a google como el proveedor
 
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
+
+    //signinwithpopup se encarga de iniciar la sesion, si hay un error, es detectado por el catch
     try {
       await signInWithPopup(auth, provider);
       navigate("/dashboard");
@@ -39,6 +44,7 @@ const Login = () => {
     }
   };
 
+  //similar al de google pero con github como proveedor
   const handleGitHubSignIn = async () => {
     const provider = new GithubAuthProvider();
     try {
@@ -50,7 +56,7 @@ const Login = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" className="fondo">
       <Box
         sx={{
           mt: 8,
@@ -81,6 +87,7 @@ const Login = () => {
             margin="normal"
             required
           />
+          {/* El boton de forgot password redirige al usuario a NuevaContra, donde se manda el email de reinicio de contraseña*/}
           <Button
             onClick={() => navigate("/NuevaContra")}
             variant="text"
@@ -99,6 +106,7 @@ const Login = () => {
             Login
           </Button>
         </form>
+        {/* Los botones de google y github ejecutan las funciones que se encargan de manejar el login de google y github */}
         <Button
           onClick={handleGoogleSignIn}
           variant="outlined"
@@ -123,7 +131,7 @@ const Login = () => {
           fullWidth
           sx={{ mt: 2 }}
         >
-          Register
+          Dont have an account? Register
         </Button>
         {error && (
           <Typography color="error" sx={{ mt: 1 }}>
