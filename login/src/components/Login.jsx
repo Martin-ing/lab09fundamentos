@@ -1,4 +1,3 @@
-// components/Login.js
 import React, { useState } from "react";
 import {
   signInWithEmailAndPassword,
@@ -15,6 +14,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -24,6 +24,7 @@ const Login = () => {
       setError(err.message);
     }
   };
+
 
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
@@ -67,6 +68,14 @@ const Login = () => {
             margin="normal"
             required
           />
+          <Button
+            onClick={() => navigate("/NuevaContra")}
+            variant="text"
+            fullWidth
+            sx={{ mt: 2 }}
+          >
+            Forgot Password?
+          </Button>
           <Button
             type="submit"
             variant="contained"

@@ -63,6 +63,14 @@ const Register = () => {
             Register
           </Button>
         </form>
+        <Button
+          onClick={() => navigate("/")}
+          variant="text"
+          fullWidth
+          sx={{ mt: 2 }}
+        >
+          Already have an acount? Log in
+        </Button>
         {error && (
           <Typography color="error" sx={{ mt: 1 }}>
             {error}

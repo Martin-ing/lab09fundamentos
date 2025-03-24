@@ -11,6 +11,7 @@ import { auth } from "./firebaseConfig";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
+import NuevaContra from "./components/NuevaContra";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -30,6 +31,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/register" element={<Register />} />
+        <Route path="/NuevaContra" element={<NuevaContra />} />
         {/* Si hay sesión, se muestra el dashboard; si no, se muestra login */}
         <Route path="/" element={user ? <Dashboard /> : <Login />} />
         <Route
