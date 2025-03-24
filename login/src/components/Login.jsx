@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  GithubAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
@@ -7,6 +8,8 @@ import {
 import { auth } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { Container, Typography, TextField, Button, Box } from "@mui/material";
+import Gitlogo from "../assets/Gitlogo.png";
+import Goologo from "../assets/Goologo.png";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -28,6 +31,16 @@ const Login = () => {
 
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleGitHubSignIn = async () => {
+    const provider = new GithubAuthProvider();
     try {
       await signInWithPopup(auth, provider);
       navigate("/dashboard");
@@ -93,7 +106,16 @@ const Login = () => {
           fullWidth
           sx={{ mt: 2 }}
         >
-          Login with Google
+          <img src={Goologo} alt="Google" style={{ width: 20, height: 20 }} /> Login with Google
+        </Button>
+        <Button
+          onClick={handleGitHubSignIn}
+          variant="outlined"
+          color="secondary"
+          fullWidth
+          sx={{ mt: 2 }}
+        >
+          <img src={Gitlogo} alt="Google" style={{ width: 20, height: 20 }} /> Login with Github
         </Button>
         <Button
           onClick={() => navigate("/register")}
