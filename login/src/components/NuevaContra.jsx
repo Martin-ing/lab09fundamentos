@@ -1,21 +1,27 @@
-// components/Register.js
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { sendPasswordResetEmail, fetchSignInMethodsForEmail } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { Container, Typography, TextField, Button, Box } from "@mui/material";
 
 const NuevaContra = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [emailSent, setEmailSent] = useState(false);
 
-  const handleRegister = async (e) => {
+  const handleResetPassword = async (e) => {
     e.preventDefault();
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard");
+        const sim = await fetchSignInMethodsForEmail(auth, email);
+        if (sim.length === 0) {
+            setError("Este correo no está registrado.");
+            return;
+        }
+        else{
+            await sendPasswordResetEmail(auth, email);
+            setEmailSent(true);
+        }
     } catch (err) {
       setError(err.message);
     }
@@ -34,7 +40,8 @@ const NuevaContra = () => {
         <Typography variant="h4" gutterBottom>
           Password resset
         </Typography>
-        <form onSubmit={handleRegister} style={{ width: "100%" }}>
+        {!emailSent ? (
+        <form onSubmit={handleResetPassword} style={{ width: "100%" }}>
           <TextField
             label="Email"
             type="email"
@@ -51,9 +58,14 @@ const NuevaContra = () => {
             fullWidth
             sx={{ mt: 2 }}
           >
-            Register
+            Send Email
           </Button>
         </form>
+        ) : (
+            <Typography color="success.main" sx={{ mt: 2 }}>
+              Correo enviado. Revisa tu bandeja de entrada.
+            </Typography>
+          )}
         <Button
           onClick={() => navigate("/")}
           variant="text"
